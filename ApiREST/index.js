@@ -1,8 +1,18 @@
 'use strict'
 
 const express = require('express')
-const app = express()
+const bodyParser = require('body-parser')
 
-app.listen(3000, ()=> {
-    console.log('Api REST funcionando')
+
+const app = express()
+const port = process.env.PORT || 3000
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
+
+app.get("/hola/:name", (req, res) => {
+    res.send({message: `Hola ${req.params.name}`})
+})
+
+app.listen(port, ()=> {
+    console.log(`Api REST funcionando en http://localhost:${port}`)
 })
