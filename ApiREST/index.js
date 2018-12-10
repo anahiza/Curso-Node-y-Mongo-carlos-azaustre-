@@ -12,10 +12,23 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 app.get("/api/product", (req, res) => {
-    res.send(200, {products: []})
+    Product.find({}, (err, products)=> {
+        if (err) return res.status(500).send({message: `Error al realizar la peticion ${err}`})
+        if (!product) return res.status(404).send({message: `El producto no existe`})
+        res.status(200).send({products})
+    
+    })
+  
 })
 
 app.get("/api/product/:id", (req, res) => {
+    console.log("GET/Product/id")
+    let pID = req.params.id
+    Product.findById(pID, (err, product) => {
+        if (err) return res.status(500).send({message: `Error al realizar la peticion ${err}`})
+        if (!product) return res.status(404).send({message: `El producto no existe`})
+        res.status(200).send({product})
+    })
 
 })
 
