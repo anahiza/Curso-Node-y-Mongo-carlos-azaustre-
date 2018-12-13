@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 app.get("/api/product", (req, res) => {
     Product.find({}, (err, products)=> {
         if (err) return res.status(500).send({message: `Error al realizar la peticion ${err}`})
-        if (!product) return res.status(404).send({message: `El producto no existe`})
+        if (!products) return res.status(404).send({message: `El producto no existe`})
         res.status(200).send({products})
     
     })
@@ -46,7 +46,7 @@ app.post("/api/product", (req, res) => {
         if (err){
             res.status(500).send(`Error al guardar en db ${err}`)
         }
-        res.status(200).send({product: p})
+        res.status(200).send({producto: p})
  
     })
    
@@ -56,7 +56,24 @@ app.put("/api/product/:id", (req, res) => {
 
 })
 
-app.delete("/api/procut/:id", (req, res)=> {
+app.delete("/api/product/:id", (req, res)=> {
+    let pID = req.params.id
+    console.log(pID)
+    Product.findById(pID, (err, product) => {
+        if (err){
+            console.log(err)
+            res.status(500).send(`Error al borrar el producto ${productId} $err`)
+        }
+        console.log(product)
+        product.remove( err => {
+            if (err){
+                console.log(err)
+                res.status(500).send(`Error al borrar el producto ${productId} ${err}`)
+            }
+            res.status(200).send("El producto ha sido eliminado")
+        })
+
+    })
 
 })
 
