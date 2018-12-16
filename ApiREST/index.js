@@ -78,10 +78,11 @@ app.delete("/api/product/:id", (req, res)=> {
 })
 
 mongoose.connect("mongodb://localhost:27017/shop", (error, res) => {
-    if (error) 
+    if (error) {
         return console.log(`Error al conectar a la db ${error}`)
+    }
     console.log("Conexion a db establecida")
     app.listen(port, ()=> {
-    console.log(`Api REST funcionando en http://localhost:${port}`)
-})
+        console.log(`Api REST funcionando en http://localhost:${port}`)
+    })
 })
