@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose')
 const User = require('../Models/User')
-consr service = require('../Services')
+const service = require('../Services')
 
 function singUp(req, res){
     const user = new User({
@@ -18,6 +18,15 @@ function singUp(req, res){
 }
 
 function singIn(req, res) {
+    User.find({email: req.body.email}, (err, user) => {
+        if (err) return res.status(500).send({message: err})
+        if (!user) return res.status(404).send({message: "Usuario no existe"})
+        req.user = user
+        res.status(200).send({
+            message: "Te has logueado correctamente",
+            token: service.createToken(user)
+        })
+    })
 
 }
 
