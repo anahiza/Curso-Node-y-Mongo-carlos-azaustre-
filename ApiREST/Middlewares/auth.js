@@ -11,8 +11,11 @@ function isAuth( req, res, next){
     const payload = service.decodeToken(token)
         .then(response => {
             req.user = response
+            next()
         })
-        .catch()
+        .catch(response => {
+            res.status(response.status)
+        })
    
 }
 

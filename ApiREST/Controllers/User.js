@@ -11,7 +11,7 @@ function singUp(req, res){
     })
 
     user.save((err)=> {
-        if (err) res.status(500).send({message: "Error al crear el usuario"})
+        if (err) res.status(500).send({message: `Error al crear el usuario ${err}`})
         return res.status(200).send({token: service.createToken(user)})
     })
 
