@@ -6,6 +6,7 @@ const app = require('./app')
 const config = require('./config')
 const port = process.env.PORT || 3000
 
+
 mongoose.connect(config.db, (error, res) => {
     if (error) {
         return console.log(`Error al conectar a la db ${error}`)
